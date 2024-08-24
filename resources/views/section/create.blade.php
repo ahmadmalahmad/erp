@@ -1,0 +1,40 @@
+{{Form::open(array('url'=>'section','method'=>'post'))}}
+<div class="modal-body">
+    <div class="row ">
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('branch_id',__('Branch'),['class'=>'form-label'])}}
+                {{Form::select('branch_id',$branch,null,array('class'=>'form-control select','placeholder'=>__('Select Branch'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('department_id',__('Department'),['class'=>'form-label'])}}
+                {{Form::select('department_id',$department,null,array('class'=>'form-control select','placeholder'=>__('Select Department'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('unit_id',__('Unit'),['class'=>'form-label'])}}
+                {{Form::select('unit_id',$unit,null,array('class'=>'form-control select','placeholder'=>__('Select Unit'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('name',__('Name'),['class'=>'form-label'])}}
+                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Section Name'),'required'=> 'required'))}}
+                @error('name')
+                <span class="invalid-name" role="alert">
+                    <strong class="text-danger">{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="button" value="{{__('Cancel')}}" class="btn  btn-light" data-bs-dismiss="modal">
+    <input type="submit" value="{{__('Create')}}" class="btn  btn-primary">
+</div>
+{{Form::close()}}
+

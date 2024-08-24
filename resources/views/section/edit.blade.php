@@ -1,0 +1,41 @@
+{{Form::model($unit,array('route' => array('section.update', $section->id), 'method' => 'PUT')) }}
+<div class="modal-body">
+
+    <div class="row ">
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('branch_id',__('Branch'))}}
+                {{Form::select('branch_id',$branch,null,array('class'=>'form-control select','placeholder'=>__('select Branch'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('department_id',__('Department'))}}
+                {{Form::select('department_id',$department,null,array('class'=>'form-control select','placeholder'=>__('select Department'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('unit_id',__('Unit'))}}
+                {{Form::select('unit_id',$unit,null,array('class'=>'form-control select','placeholder'=>__('select Section'),'required'=> 'required'))}}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('name',__('Name'))}}
+                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Unit Name'),'required'=> 'required'))}}
+                @error('name')
+                <span class="invalid-name" role="alert">
+                    <strong class="text-danger">{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="button" value="{{__('Cancel')}}" class="btn  btn-light" data-bs-dismiss="modal">
+    <input type="submit" value="{{__('Update')}}" class="btn  btn-primary">
+</div>
+{{Form::close()}}
