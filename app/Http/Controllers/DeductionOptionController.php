@@ -4,47 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\DeductionOption;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DeductionOptionController extends Controller
 {
     public function index()
     {
-        if(\Auth::user()->can('manage deduction option'))
-        {
+        if (\Auth::user()->can('manage deduction option')) {
             $deductionoptions = DeductionOption::where('created_by', '=', \Auth::user()->creatorId())->get();
 
             return view('deductionoption.index', compact('deductionoptions'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
     public function create()
     {
-        if(\Auth::user()->can('create deduction option'))
-        {
+        if (\Auth::user()->can('create deduction option')) {
             return view('deductionoption.create');
-        }
-        else
-        {
+        } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
     }
 
     public function store(Request $request)
     {
-        if(\Auth::user()->can('create deduction option'))
-        {
+        if (\Auth::user()->can('create deduction option')) {
 
             $validator = \Validator::make(
-                $request->all(), [
-                                   'name' => 'required',
-                               ]
+                $request->all(),
+                [
+                    'name' => 'required|unique:deduction_options,name|min:3|max:20',
+                ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -56,9 +50,7 @@ class DeductionOptionController extends Controller
             $deductionoption->save();
 
             return redirect()->route('deductionoption.index')->with('success', __('DeductionOption  successfully created.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -71,39 +63,31 @@ class DeductionOptionController extends Controller
     public function edit($deductionoption)
     {
         $deductionoption = DeductionOption::find($deductionoption);
-        if(\Auth::user()->can('edit deduction option'))
-        {
-            if($deductionoption->created_by == \Auth::user()->creatorId())
-            {
+        if (\Auth::user()->can('edit deduction option')) {
+            if ($deductionoption->created_by == \Auth::user()->creatorId()) {
 
                 return view('deductionoption.edit', compact('deductionoption'));
-            }
-            else
-            {
+            } else {
                 return response()->json(['error' => __('Permission denied.')], 401);
             }
-        }
-        else
-        {
+        } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
     }
 
     public function update(Request $request, DeductionOption $deductionoption)
     {
-        if(\Auth::user()->can('edit deduction option'))
-        {
-            if($deductionoption->created_by == \Auth::user()->creatorId())
-            {
+        if (\Auth::user()->can('edit deduction option')) {
+            if ($deductionoption->created_by == \Auth::user()->creatorId()) {
                 $validator = \Validator::make(
-                    $request->all(), [
-                                       'name' => 'required',
+                    $request->all(),
+                    [
+                        'name' => ['required', Rule::unique('deduction_options', 'name')->ignore($deductionoption->id), 'min:3', 'max:20'],
 
-                                   ]
+                    ]
                 );
 
-                if($validator->fails())
-                {
+                if ($validator->fails()) {
                     $messages = $validator->getMessageBag();
 
                     return redirect()->back()->with('error', $messages->first());
@@ -112,35 +96,25 @@ class DeductionOptionController extends Controller
                 $deductionoption->save();
 
                 return redirect()->route('deductionoption.index')->with('success', __('DeductionOption successfully updated.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
     public function destroy(DeductionOption $deductionoption)
     {
-        if(\Auth::user()->can('delete deduction option'))
-        {
-            if($deductionoption->created_by == \Auth::user()->creatorId())
-            {
+        if (\Auth::user()->can('delete deduction option')) {
+            if ($deductionoption->created_by == \Auth::user()->creatorId()) {
                 $deductionoption->delete();
 
                 return redirect()->route('deductionoption.index')->with('success', __('DeductionOption successfully deleted.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }

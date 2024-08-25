@@ -14,12 +14,13 @@ class CreateGoalTypesTable extends Migration
     public function up()
     {
         Schema::create(
-            'goal_types', function (Blueprint $table){
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('created_by')->default(0);
-            $table->timestamps();
-        }
+            'goal_types',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->integer('created_by')->default(0);
+                $table->timestamps();
+            }
         );
     }
 
