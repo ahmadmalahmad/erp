@@ -8,6 +8,8 @@ class PayslipType extends Model
 {
     protected $fillable = [
         'name',
+        'unit',
+        'number',
         'created_by',
     ];
 }

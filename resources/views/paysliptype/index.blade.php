@@ -36,6 +36,9 @@
                             <thead>
                             <tr>
                                 <th>{{__('Payslip Type')}}</th>
+                                <th>{{__('Unit')}}</th>
+                                <th>{{__('Number')}}</th>
+                                
                                 <th width="200px">{{__('Action')}}</th>
                             </tr>
                             </thead>
@@ -43,6 +46,8 @@
                             @foreach ($paysliptypes as $paysliptype)
                                 <tr>
                                     <td>{{ $paysliptype->name }}</td>
+                                    <td>{{ $paysliptype->unit }}</td>
+                                    <td>{{ $paysliptype->number }}</td>
 
                                     <td>
 

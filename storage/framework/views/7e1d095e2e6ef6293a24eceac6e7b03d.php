@@ -35,6 +35,9 @@
                             <thead>
                             <tr>
                                 <th><?php echo e(__('Payslip Type')); ?></th>
+                                <th><?php echo e(__('Unit')); ?></th>
+                                <th><?php echo e(__('Number')); ?></th>
+                                
                                 <th width="200px"><?php echo e(__('Action')); ?></th>
                             </tr>
                             </thead>
@@ -42,6 +45,8 @@
                             <?php $__currentLoopData = $paysliptypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paysliptype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($paysliptype->name); ?></td>
+                                    <td><?php echo e($paysliptype->unit); ?></td>
+                                    <td><?php echo e($paysliptype->number); ?></td>
 
                                     <td>
 

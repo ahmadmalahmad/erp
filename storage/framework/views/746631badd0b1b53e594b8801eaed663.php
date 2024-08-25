@@ -1,14 +1,13 @@
-    <?php echo e(Form::open(['url' => 'paysliptype', 'method' => 'post'])); ?>
+    <?php echo e(Form::model($paysliptype, ['route' => ['paysliptype.update', $paysliptype->id], 'method' => 'PUT'])); ?>
 
     <div class="modal-body">
-
 
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <?php echo e(Form::label('name', __('Name'), ['class' => 'form-label'])); ?>
 
-                    <?php echo e(Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Payslip Type Name'), 'required' => 'required'])); ?>
+                    <?php echo e(Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Department Name'), 'required' => 'required'])); ?>
 
                     <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -24,7 +23,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
             </div>
-            
             <div class="col-md-12">
                 <div class="form-group">
                     <?php echo e(Form::label('unit', __('Unit'), ['class' => 'form-label'])); ?>
@@ -53,13 +51,12 @@ unset($__errorArgs, $__bag); ?>
 
                 </div>
             </div>
-
         </div>
     </div>
     <div class="modal-footer">
-        <input type="button" value="<?php echo e(__('Cancel')); ?>" class="btn  btn-light" data-bs-dismiss="modal">
-        <input type="submit" value="<?php echo e(__('Create')); ?>" class="btn  btn-primary">
+        <input type="button" value="<?php echo e(__('Cancel')); ?>" class="btn btn-light" data-bs-dismiss="modal">
+        <input type="submit" value="<?php echo e(__('Update')); ?>" class="btn btn-primary">
     </div>
     <?php echo e(Form::close()); ?>
 
-<?php /**PATH C:\xampp\htdocs\erp\resources\views/paysliptype/create.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\erp\resources\views/paysliptype/edit.blade.php ENDPATH**/ ?>
