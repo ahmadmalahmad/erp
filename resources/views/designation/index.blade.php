@@ -32,6 +32,8 @@
                             <tr>
                                 <th>{{ __('Branch') }}</th> 
                                 <th>{{__('Department')}}</th>
+                                <th>{{ __('Unit') }}</th> 
+                                <th>{{__('Section')}}</th>
                                 <th>{{__('Designation')}}</th>
                                 <th width="200px">{{__('Action')}}</th>
                             </tr>
@@ -43,7 +45,9 @@
                                 @endphp
                                 <tr>
                                     <td>{{ !empty($designation->branch_id) ? $designation->branch->name : '-' }}</td>
-                                    <td>{{ !empty($department->name)?$department->name:'' }}</td>
+                                    <td>{{ !empty($designation->department_id)?$designation->department->name:'' }}</td>
+                                    <td>{{ !empty($designation->unit_id) ? $designation->unit->name : '-' }}</td>
+                                    <td>{{ !empty($designation->section_id)?$designation->section->name:'' }}</td>
                                     <td>{{ $designation->name }}</td>
 
                                     <td class="Action">

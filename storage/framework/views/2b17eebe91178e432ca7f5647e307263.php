@@ -49,14 +49,14 @@
 
                                     <td class="Action">
                                         <span>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit department')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit unit')): ?>
                                             <div class="action-btn bg-primary ms-2">
 
                                                 <a href="#" data-url="<?php echo e(URL::to('unit/'.$unit->id.'/edit')); ?>"  data-ajax-popup="true" data-title="<?php echo e(__('Edit Unit')); ?>" class="mx-3 btn btn-sm d-inline-flex align-items-center" data-bs-toggle="tooltip" title="<?php echo e(__('Edit')); ?>" data-original-title="<?php echo e(__('Edit')); ?>">
                                                     <i class="ti ti-pencil text-white"></i></a>
                                             </div>
                                                 <?php endif; ?>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete department')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete unit')): ?>
                                                     <div class="action-btn bg-danger ms-2">
                                                         <?php echo Form::open(['method' => 'DELETE', 'route' => ['unit.destroy', $unit->id],'id'=>'delete-form-'.$unit->id]); ?>
 

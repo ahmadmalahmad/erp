@@ -33,6 +33,8 @@
                             <tr>
                                 <th>{{__('Leave Type')}}</th>
                                 <th>{{__('Days / Year')}}</th>
+                                <th>{{__('Min Years')}}</th>
+                                <th>{{__('Max Years')}}</th>
                                 <th width="200px">{{__('Action')}}</th>
                             </tr>
                             </thead>
@@ -41,6 +43,8 @@
                                 <tr>
                                     <td>{{ $leavetype->title }}</td>
                                     <td>{{ $leavetype->days}}</td>
+                                    <td>{{ $leavetype->min_years}}</td>
+                                    <td>{{ $leavetype->max_years}}</td>
 
                                     <td>
 

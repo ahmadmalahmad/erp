@@ -32,6 +32,8 @@
                             <tr>
                                 <th><?php echo e(__('Branch')); ?></th> 
                                 <th><?php echo e(__('Department')); ?></th>
+                                <th><?php echo e(__('Unit')); ?></th> 
+                                <th><?php echo e(__('Section')); ?></th>
                                 <th><?php echo e(__('Designation')); ?></th>
                                 <th width="200px"><?php echo e(__('Action')); ?></th>
                             </tr>
@@ -43,7 +45,9 @@
                                 ?>
                                 <tr>
                                     <td><?php echo e(!empty($designation->branch_id) ? $designation->branch->name : '-'); ?></td>
-                                    <td><?php echo e(!empty($department->name)?$department->name:''); ?></td>
+                                    <td><?php echo e(!empty($designation->department_id)?$designation->department->name:''); ?></td>
+                                    <td><?php echo e(!empty($designation->unit_id) ? $designation->unit->name : '-'); ?></td>
+                                    <td><?php echo e(!empty($designation->section_id)?$designation->section->name:''); ?></td>
                                     <td><?php echo e($designation->name); ?></td>
 
                                     <td class="Action">

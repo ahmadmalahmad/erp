@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DepartmentController extends Controller
 {
@@ -44,7 +45,7 @@ class DepartmentController extends Controller
             $validator = \Validator::make(
                 $request->all(), [
                                    'branch_id' => 'required',
-                                   'name' => 'required|max:20',
+                                   'name' => ['required','unique:departments,name','max:20','min:3'],
                                ]
             );
             if($validator->fails())
@@ -103,7 +104,7 @@ class DepartmentController extends Controller
                 $validator = \Validator::make(
                     $request->all(), [
                                        'branch_id' => 'required',
-                                       'name' => 'required|max:20',
+                                       'name' => ['required',Rule::unique('departments','name')->ignore($department->id),'max:20','min:3'],
                                    ]
                 );
                 if($validator->fails())

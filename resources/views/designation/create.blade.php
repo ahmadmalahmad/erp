@@ -12,6 +12,14 @@
                 {{ Form::select('department_id', $departments,null, array('class' => 'form-control select','required'=>'required','placeholder'=>'Select Department')) }}
             </div>
             <div class="form-group">
+                {{ Form::label('unit_id', __('Unit'),['class'=>'form-label']) }}
+                {{ Form::select('unit_id', $units,null, array('class' => 'form-control select','required'=>'required','placeholder'=>'Select Unit')) }}
+            </div>
+            <div class="form-group">
+                {{ Form::label('section_id', __('Section'),['class'=>'form-label']) }}
+                {{ Form::select('section_id', $sections,null, array('class' => 'form-control select','required'=>'required','placeholder'=>'Select Scetion')) }}
+            </div>
+            <div class="form-group">
                 {{Form::label('name',__('Name'),['class'=>'form-label'])}}
                 {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Designation Name'),'required'=> 'required'))}}
                 @error('name')

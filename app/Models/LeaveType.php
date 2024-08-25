@@ -10,5 +10,7 @@ class LeaveType extends Model
         'title',
         'days',
         'created_by',
+        'min_years',
+        'max_years'
     ];
 }

@@ -6,6 +6,7 @@ use App\Models\Unit;
 use App\Models\Branch;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UnitController extends Controller
 {
@@ -56,7 +57,7 @@ class UnitController extends Controller
                 $request->all(), [
                                    'branch_id' => 'required',
                                    'department_id' => 'required',
-                                   'name' => 'required|max:20',
+                                   'name' => ['required','unique:units,name','max:20','min:3'],
                                ]
             );
             if($validator->fails())
@@ -127,8 +128,8 @@ class UnitController extends Controller
                     $request->all(), [
                                        'branch_id' => 'required',
                                         'department_id' => 'required',
-                                        'name' => 'required|max:20',
-                                   ]
+                                        'name' => ['required',Rule::unique('units','name')->ignore($unit->id),'max:20','min:3'],
+                                        ]
                 );
                 if($validator->fails())
                 {
