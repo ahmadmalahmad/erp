@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JobStage;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class JobStageController extends Controller
 {
@@ -36,6 +37,7 @@ class JobStageController extends Controller
             $validator = \Validator::make(
                 $request->all(), [
                                    'title' => 'required',
+                                   'title' => 'required|unique:job_stages,title',
                                ]
             );
 
@@ -79,7 +81,7 @@ class JobStageController extends Controller
 
             $validator = \Validator::make(
                 $request->all(), [
-                                   'title' => 'required',
+                                   'title' => ['required', Rule::unique('job_stages', 'title')->ignore($jobStage->id), 'max:20', 'min:3'],
                                ]
             );
 

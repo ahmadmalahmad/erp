@@ -5,20 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Competencies;
 use App\Models\PerformanceType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CompetenciesController extends Controller
 {
 
     public function index()
     {
-        if(\Auth::user()->can('Manage Competencies'))
-        {
+        if (\Auth::user()->can('Manage Competencies')) {
             $competencies = Competencies::where('created_by', \Auth::user()->creatorId())->get();
 
             return view('competencies.index', compact('competencies'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -27,24 +25,22 @@ class CompetenciesController extends Controller
     public function create()
     {
         $performance     = PerformanceType::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            return view('competencies.create', compact('performance'));
-
+        return view('competencies.create', compact('performance'));
     }
 
 
     public function store(Request $request)
     {
-        if(\Auth::user()->can('Create Competencies'))
-        {
+        if (\Auth::user()->can('Create Competencies')) {
 
             $validator = \Validator::make(
-                $request->all(), [
-                                   'name' => 'required',
-                                   'type' => 'required',
-                               ]
+                $request->all(),
+                [
+                    'name' => 'required|unique:competencies,name',
+                    'type' => 'required',
+                ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -57,9 +53,7 @@ class CompetenciesController extends Controller
             $competencies->save();
 
             return redirect()->route('competencies.index')->with('success', __('Competencies  successfully created.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -76,23 +70,21 @@ class CompetenciesController extends Controller
         $competencies = Competencies::find($id);
         $performance     = PerformanceType::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('name', 'id');
         return view('competencies.edit', compact('performance', 'competencies'));
-
     }
 
 
     public function update(Request $request, $id)
     {
-        if(\Auth::user()->can('Edit Competencies'))
-        {
+        if (\Auth::user()->can('Edit Competencies')) {
 
             $validator = \Validator::make(
-                $request->all(), [
-                                   'name' => 'required',
-                                   'type' => 'required',
-                               ]
+                $request->all(),
+                [
+                    'name' => ['required', Rule::unique('competencies', 'name')->ignore($id), 'max:20', 'min:3'],
+                    'type' => 'required',
+                ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -103,9 +95,7 @@ class CompetenciesController extends Controller
             $competencies->save();
 
             return redirect()->route('competencies.index')->with('success', __('Competencies  successfully updated.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -113,15 +103,12 @@ class CompetenciesController extends Controller
 
     public function destroy($id)
     {
-        if(\Auth::user()->can('Delete Competencies'))
-        {
+        if (\Auth::user()->can('Delete Competencies')) {
             $competencies = Competencies::find($id);
             $competencies->delete();
 
             return redirect()->route('competencies.index')->with('success', __('Competencies  successfully deleted.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }

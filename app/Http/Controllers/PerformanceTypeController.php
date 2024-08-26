@@ -4,21 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\PerformanceType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PerformanceTypeController extends Controller
 {
 
     public function index()
     {
-        if(\Auth::user()->can('manage performance type'))
-        {
-            if(\Auth::user()->type == 'company')
-            {
+        if (\Auth::user()->can('manage performance type')) {
+            if (\Auth::user()->type == 'company') {
                 $types = PerformanceType::where('created_by', '=', \Auth::user()->creatorId())->get();
                 return view('performanceType.index', compact('types'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
         }
@@ -32,17 +29,15 @@ class PerformanceTypeController extends Controller
 
     public function store(Request $request)
     {
-        if(\Auth::user()->can('create performance type'))
-        {
-            if(\Auth::user()->type == 'company')
-            {
+        if (\Auth::user()->can('create performance type')) {
+            if (\Auth::user()->type == 'company') {
                 $validator = \Validator::make(
-                    $request->all(), [
-                                       'name' => 'required',
-                                   ]
+                    $request->all(),
+                    [
+                        'name' => 'required|unique:performance_types,name',
+                    ]
                 );
-                if($validator->fails())
-                {
+                if ($validator->fails()) {
                     $messages = $validator->getMessageBag();
 
                     return redirect()->back()->with('error', $messages->first());
@@ -54,13 +49,10 @@ class PerformanceTypeController extends Controller
                 $types->save();
 
                 return redirect()->route('performanceType.index')->with('success', __('Performance Type successfully created.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
         }
-
     }
 
 
@@ -79,17 +71,15 @@ class PerformanceTypeController extends Controller
     public function update(Request $request, PerformanceType $performanceType)
     {
 
-        if(\Auth::user()->can('edit performance type'))
-        {
-            if(\Auth::user()->type == 'company')
-            {
+        if (\Auth::user()->can('edit performance type')) {
+            if (\Auth::user()->type == 'company') {
                 $validator = \Validator::make(
-                    $request->all(), [
-                                       'name' => 'required',
-                                   ]
+                    $request->all(),
+                    [
+                        'name' => ['required', Rule::unique('performance_types', 'name')->ignore($performanceType->id), 'max:20', 'min:3'],
+                    ]
                 );
-                if($validator->fails())
-                {
+                if ($validator->fails()) {
                     $messages = $validator->getMessageBag();
 
                     return redirect()->back()->with('error', $messages->first());
@@ -100,36 +90,25 @@ class PerformanceTypeController extends Controller
                 $performanceType->save();
 
                 return redirect()->route('performanceType.index')->with('success', __('Performance Type successfully updated.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
-
         }
-
-
     }
 
 
     public function destroy(PerformanceType $performanceType)
     {
 
-        if(\Auth::user()->can('delete performance type'))
-        {
-            if(\Auth::user()->type == 'company')
-            {
+        if (\Auth::user()->can('delete performance type')) {
+            if (\Auth::user()->type == 'company') {
 
                 $performanceType->delete();
 
                 return redirect()->route('performanceType.index')->with('success', __('Performance Type successfully deleted.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
         }
-
-
     }
 }

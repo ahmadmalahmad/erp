@@ -40,6 +40,8 @@
 
         <a href="<?php echo e(route('competencies.index')); ?>" class="list-group-item list-group-item-action border-0 <?php echo e(request()->is('competencies*') ? 'active' : ''); ?>"><?php echo e(__('Competencies')); ?><div class="float-end"><i class="ti ti-chevron-right"></i></div></a>
 
+        <a href="<?php echo e(route('assets-type.index')); ?>" class="list-group-item list-group-item-action border-0 <?php echo e(request()->is('assets-type*') ? 'active' : ''); ?>"><?php echo e(__('Assets Type')); ?><div class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+
     </div>
 </div>
 <?php /**PATH C:\xampp\htdocs\erp\resources\views/layouts/hrm_setup.blade.php ENDPATH**/ ?>

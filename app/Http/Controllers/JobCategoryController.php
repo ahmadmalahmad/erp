@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class JobCategoryController extends Controller
 {
 
     public function index()
     {
-        if(\Auth::user()->can('manage job category'))
-        {
+        if (\Auth::user()->can('manage job category')) {
             $categories = JobCategory::where('created_by', '=', \Auth::user()->creatorId())->get();
 
             return view('jobCategory.index', compact('categories'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -31,17 +29,16 @@ class JobCategoryController extends Controller
 
     public function store(Request $request)
     {
-        if(\Auth::user()->can('create job category'))
-        {
+        if (\Auth::user()->can('create job category')) {
 
             $validator = \Validator::make(
-                $request->all(), [
-                                   'title' => 'required',
-                               ]
+                $request->all(),
+                [
+                    'title' => 'required|unique:job_categories,name',
+                ]
             );
 
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -53,9 +50,7 @@ class JobCategoryController extends Controller
             $jobCategory->save();
 
             return redirect()->back()->with('success', __('Job category  successfully created.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -74,17 +69,16 @@ class JobCategoryController extends Controller
 
     public function update(Request $request, JobCategory $jobCategory)
     {
-        if(\Auth::user()->can('edit job category'))
-        {
+        if (\Auth::user()->can('edit job category')) {
 
             $validator = \Validator::make(
-                $request->all(), [
-                                   'title' => 'required',
-                               ]
+                $request->all(),
+                [
+                    'title' => ['required', Rule::unique('job_categories', 'title')->ignore($jobCategory->id), 'max:20', 'min:3'],
+                ]
             );
 
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
                 return redirect()->back()->with('error', $messages->first());
@@ -94,9 +88,7 @@ class JobCategoryController extends Controller
             $jobCategory->save();
 
             return redirect()->back()->with('success', __('Job category  successfully updated.'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
@@ -104,21 +96,15 @@ class JobCategoryController extends Controller
 
     public function destroy(JobCategory $jobCategory)
     {
-        if(\Auth::user()->can('delete job category'))
-        {
-            if($jobCategory->created_by == \Auth::user()->creatorId())
-            {
+        if (\Auth::user()->can('delete job category')) {
+            if ($jobCategory->created_by == \Auth::user()->creatorId()) {
                 $jobCategory->delete();
 
                 return redirect()->back()->with('success', __('Job category successfully deleted.'));
-            }
-            else
-            {
+            } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
             }
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }

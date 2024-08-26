@@ -7,6 +7,7 @@ use App\Http\Controllers\AllowanceOptionController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AppraisalController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\AssetsTypeController;
 use App\Http\Controllers\AttendanceEmployeeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -874,6 +875,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::resource('branch', BranchController::class)->middleware(['auth', 'XSS']);
     Route::resource('unit', UnitController::class)->middleware(['auth', 'XSS']);
     Route::resource('section', SectionController::class)->middleware(['auth', 'XSS']);
+    Route::resource('assets-type', AssetsTypeController::class)->middleware(['auth', 'XSS']);
 
     // Hrm EmployeeController
 

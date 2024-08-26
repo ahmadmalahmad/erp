@@ -404,7 +404,7 @@
                                 </span>
                             </a>
                             <ul class="dash-submenu">
-                                <li
+                                {{-- <li
                                     class="dash-item  {{ Request::segment(1) == 'employee' ? 'active dash-trigger' : '' }}   ">
                                     @if (\Auth::user()->type == 'Employee')
                                         @php
@@ -729,13 +729,16 @@
                                         <a class="dash-link"
                                             href="{{ route('company-policy.index') }}">{{ __('Company policy') }}</a>
                                     </li>
-                                @endcan
+                                @endcan --}}
 
                                 @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'HR')
                                     <li
                                         class="dash-item {{ Request::segment(1) == 'leavetype' ||
                                         Request::segment(1) == 'document' ||
                                         Request::segment(1) == 'performanceType' ||
+                                        Request::segment(1) == 'unit' ||
+                                        Request::segment(1) == 'section' ||
+                                        Request::segment(1) == 'assets-type' ||
                                         Request::segment(1) == 'branch' ||
                                         Request::segment(1) == 'department' ||
                                         Request::segment(1) == 'designation' ||
