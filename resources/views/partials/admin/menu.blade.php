@@ -42,7 +42,7 @@
                         Gate::check('show account dashboard') ||
                         Gate::check('show crm dashboard') ||
                         Gate::check('show pos dashboard'))
-                    <li
+                    {{-- <li
                         class="dash-item dash-hasmenu
                                 {{ Request::segment(1) == null ||
                                 Request::segment(1) == 'account-dashboard' ||
@@ -332,7 +332,7 @@
                             @endif
 
                         </ul>
-                    </li>
+                    </li> --}}
                 @endif
                 <!--------------------- End Dashboard ----------------------------------->
 
@@ -769,7 +769,7 @@
             <!--------------------- End HRM ----------------------------------->
 
             <!--------------------- Start Account ----------------------------------->
-
+{{-- 
             @if (!empty($userPlan) &&  $userPlan->account == 1)
                 @if (Gate::check('manage customer') ||
                         Gate::check('manage vender') ||
@@ -1022,13 +1022,13 @@
                         </ul>
                     </li>
                 @endif
-            @endif
+            @endif --}}
 
             <!--------------------- End Account ----------------------------------->
 
             <!--------------------- Start CRM ----------------------------------->
 
-            @if (!empty($userPlan) &&  $userPlan->crm == 1)
+            {{-- @if (!empty($userPlan) &&  $userPlan->crm == 1)
                 @if (Gate::check('manage lead') ||
                         Gate::check('manage deal') ||
                         Gate::check('manage form builder') ||
@@ -1082,13 +1082,13 @@
             </ul>
             </li>
         @endif
-        @endif
+        @endif --}}
 
         <!--------------------- End CRM ----------------------------------->
 
         <!--------------------- Start Project ----------------------------------->
 
-        @if (!empty($userPlan) &&  $userPlan->project == 1)
+        {{-- @if (!empty($userPlan) &&  $userPlan->project == 1)
             @if (Gate::check('manage project'))
                 <li
                     class="dash-item dash-hasmenu
@@ -1178,7 +1178,7 @@
                     </ul>
                 </li>
             @endif
-        @endif
+        @endif --}}
 
         <!--------------------- End Project ----------------------------------->
 
@@ -1186,9 +1186,7 @@
 
         <!--------------------- Start User Managaement System ----------------------------------->
 
-        @if (
-            \Auth::user()->type != 'super admin' &&
-                (Gate::check('manage user') || Gate::check('manage role') || Gate::check('manage client')))
+        {{-- @if (\Auth::user()->type != 'super admin' && (Gate::check('manage user') || Gate::check('manage role') || Gate::check('manage client')))
             <li
                 class="dash-item dash-hasmenu {{ Request::segment(1) == 'users' ||
                 Request::segment(1) == 'roles' ||
@@ -1221,20 +1219,20 @@
                             <a class="dash-link" href="{{ route('clients.index') }}">{{ __('Client') }}</a>
                         </li>
                     @endcan
-                    {{--                                    @can('manage user') --}}
-                    {{--                                        <li class="dash-item {{ (Request::route()->getName() == 'users.index' || Request::segment(1) == 'users' || Request::route()->getName() == 'users.edit') ? ' active' : '' }}"> --}}
-                    {{--                                            <a class="dash-link" href="{{ route('user.userlog') }}">{{__('User Logs')}}</a> --}}
-                    {{--                                        </li> --}}
-                    {{--                                    @endcan --}}
+                    @can('manage user')
+                        <li class="dash-item {{ (Request::route()->getName() == 'users.index' || Request::segment(1) == 'users' || Request::route()->getName() == 'users.edit') ? ' active' : '' }}">
+                            <a class="dash-link" href="{{ route('user.userlog') }}">{{__('User Logs')}}</a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
-        @endif
+        @endif --}}
 
         <!--------------------- End User Managaement System----------------------------------->
 
 
         <!--------------------- Start Products System ----------------------------------->
-
+{{-- 
         @if (Gate::check('manage product & service') || Gate::check('manage product & service'))
             <li class="dash-item dash-hasmenu">
                 <a href="#!" class="dash-link ">
@@ -1259,13 +1257,13 @@
                     @endif
                 </ul>
             </li>
-        @endif
+        @endif --}}
 
         <!--------------------- End Products System ----------------------------------->
 
 
         <!--------------------- Start POs System ----------------------------------->
-        @if (!empty($userPlan) &&  $userPlan->pos == 1)
+        {{-- @if (!empty($userPlan) &&  $userPlan->pos == 1)
             @if (Gate::check('manage warehouse') ||
                     Gate::check('manage purchase') ||
                     Gate::check('manage pos') ||
@@ -1335,10 +1333,10 @@
                     </ul>
                 </li>
             @endif
-        @endif
+        @endif --}}
         <!--------------------- End POs System ----------------------------------->
 
-        @if (\Auth::user()->type != 'super admin')
+        {{-- @if (\Auth::user()->type != 'super admin')
             <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'support' ? 'active' : '' }}">
                 <a href="{{ route('support.index') }}" class="dash-link">
                     <span class="dash-micon"><i class="ti ti-headphones"></i></span><span
@@ -1367,10 +1365,10 @@
                         class="dash-mtext">{{ __('Notification Template') }}</span>
                 </a>
             </li>
-        @endif
+        @endif --}}
 
         <!--------------------- Start System Setup ----------------------------------->
-
+{{-- 
         @if (\Auth::user()->type != 'super admin')
             @if (Gate::check('manage company plan') || Gate::check('manage order') || Gate::check('manage company settings'))
                 <li
@@ -1415,7 +1413,7 @@
                     </ul>
                 </li>
             @endif
-        @endif
+        @endif --}}
 
 
 
@@ -1607,7 +1605,7 @@
 
         <div class="navbar-footer border-top ">
             <div class="d-flex align-items-center py-3 px-3 border-bottom">
-                <div class="me-2">
+                {{-- <div class="me-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30"
                         fill="none">
                         <circle cx="14.5" cy="15.1846" r="14.5" fill="#6FD943"></circle>
@@ -1627,11 +1625,11 @@
                             d="M22.08 21.7046C21.75 22.0846 21.4 22.4446 21.02 22.7646L17.12 18.8546C17.1 18.8346 17.09 18.8246 17.08 18.8046C17.49 18.5146 17.84 18.1646 18.13 17.7546C18.15 17.7646 18.16 17.7746 18.18 17.7946L22.08 21.7046Z"
                             fill="#162C4E"></path>
                     </svg>
-                </div>
-                <div>
+                </div> --}}
+                {{-- <div>
                     <b class="d-block f-w-700">{{ __('You need help?') }}</b>
                     <span>{{ __('Check out our repository') }} </span>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
