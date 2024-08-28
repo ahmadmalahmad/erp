@@ -12,8 +12,13 @@ class CompanyPolicy extends Model
         'description',
         'file',
         'created_by',
+        'status'
     ];
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+    
     public function branches()
     {
         return $this->hasOne('App\Models\Branch', 'id', 'branch');

@@ -49,8 +49,9 @@ class CompanyPolicyController extends Controller
             $validator = \Validator::make(
                 $request->all(), [
                                    'branch' => 'required',
-                                   'title' => 'required',
-
+                                   'title' => 'required|string|max:20|min:3',
+                                //    'description' => 'nullable|string',
+                                //    'status' => 'nullable|boolean'
                                ]
             );
             if($validator->fails())

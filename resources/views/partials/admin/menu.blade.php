@@ -717,7 +717,7 @@
                                         <a class="dash-link"
                                             href="{{ route('account-assets.index') }}">{{ __('Employees Asset Setup ') }}</a>
                                     </li>
-                                @endcan
+                                @endcan --}}
                                 @can('manage document')
                                     <li class="dash-item {{ request()->is('document-upload*') ? 'active' : '' }}">
                                         <a class="dash-link"
@@ -729,7 +729,7 @@
                                         <a class="dash-link"
                                             href="{{ route('company-policy.index') }}">{{ __('Company policy') }}</a>
                                     </li>
-                                @endcan --}}
+                                @endcan
 
                                 @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'HR')
                                     <li

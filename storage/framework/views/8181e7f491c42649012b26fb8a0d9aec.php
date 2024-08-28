@@ -116,6 +116,18 @@
                             </a>
                             <ul class="dash-submenu">
                                 
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('manage document')): ?>
+                                    <li class="dash-item <?php echo e(request()->is('document-upload*') ? 'active' : ''); ?>">
+                                        <a class="dash-link"
+                                            href="<?php echo e(route('document-upload.index')); ?>"><?php echo e(__('Document Setup')); ?></a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('manage company policy')): ?>
+                                    <li class="dash-item <?php echo e(request()->is('company-policy*') ? 'active' : ''); ?>">
+                                        <a class="dash-link"
+                                            href="<?php echo e(route('company-policy.index')); ?>"><?php echo e(__('Company policy')); ?></a>
+                                    </li>
+                                <?php endif; ?>
 
                                 <?php if(\Auth::user()->type == 'company' || \Auth::user()->type == 'HR'): ?>
                                     <li
@@ -202,10 +214,22 @@
         </ul>
         <?php endif; ?>
         <?php if(\Auth::user()->type == 'client'): ?>
-            
+            <ul class="dash-navbar">
+                <?php if(Gate::check('manage client dashboard')): ?>
+                    <li class="dash-item dash-hasmenu <?php echo e(Request::segment(1) == 'dashboard' ? ' active' : ''); ?>">
+                        <a href="<?php echo e(route('client.dashboard.view')); ?>" class="dash-link">
+                            <span class="dash-micon"><i class="ti ti-home"></i></span><span
+                                class="dash-mtext"><?php echo e(__('Dashboard')); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if(Gate::check('manage deal')): ?>
+                    <li class="dash-item dash-hasmenu <?php echo e(Request::segment(1) == 'deals' ? ' active' : ''); ?>">
+                        <a href="<?php echo e(route('deals.index')); ?>" class="dash-link">
+                            <span class="dash-micon"><i class="ti ti-rocket"></i></span><span
                                 class="dash-mtext"><?php echo e(__('Deals')); ?></span>
                         </a>
-                    </li> --}}
+                    </li>
                 <?php endif; ?>
                 <?php if(Gate::check('manage contract')): ?>
                     <li
